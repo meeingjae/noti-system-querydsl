@@ -6,16 +6,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "NOTI")
-public class Noti {
+@Table(name = "NOTI_RECEIVE")
+public class NotiReceive {
 
     @Id
+    @Column(name = "noti_receive_id", nullable = false)
+    private long notiReceiveId;
+
     @Column(name = "noti_id", nullable = false)
     private long notiId;
 
     @Column(name = "user_id", nullable = false)
     private long userId;
 
-    @Column(name = "message", nullable = false)
-    private String message;
+    @Column(name = "read_flag", nullable = false)
+    private boolean readFlag;
 }
