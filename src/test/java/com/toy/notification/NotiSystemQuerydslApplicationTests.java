@@ -26,7 +26,7 @@ class NotiSystemQuerydslApplicationTests {
                 .companyId(1L)
                 .name("test").build());
 
-        List<Company> company = companyRepository.findAll();
+        List<Company> company = companyRepository.findAllCompany();
 
         System.out.println(company);
         assert company.size() == 1;
