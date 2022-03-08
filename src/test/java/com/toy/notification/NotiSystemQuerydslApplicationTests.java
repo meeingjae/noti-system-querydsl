@@ -1,35 +1,31 @@
 package com.toy.notification;
 
-import com.toy.notification.domain.company.Company;
 import com.toy.notification.domain.company.CompanyRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@RunWith(SpringRunner.class)
 class NotiSystemQuerydslApplicationTests {
 
     @Autowired
     private CompanyRepository companyRepository;
 
     @Test
-    void contextLoads() {
-
-    }
-
-    @Test
     public void companySaveTest() {
-
-        companyRepository.save(Company.builder()
-                .companyId(1L)
+      
+       Company company = companyRepository.save(Company.builder()
                 .name("test").build());
 
-        List<Company> company = companyRepository.findAllCompany();
+        List<Company> companyList = companyRepository.findAllCompany();
 
         System.out.println(company);
-        assert company.size() == 1;
+        assert company.getName().equals("test");
+        assert companyList.size() == 1;
     }
 
 }

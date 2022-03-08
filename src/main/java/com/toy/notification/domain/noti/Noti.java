@@ -2,7 +2,7 @@ package com.toy.notification.domain.noti;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-결import javax.persistence.GeneratedValue;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
