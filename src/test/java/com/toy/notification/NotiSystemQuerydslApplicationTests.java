@@ -15,14 +15,17 @@ class NotiSystemQuerydslApplicationTests {
     @Autowired
     private CompanyRepository companyRepository;
 
-    @Transactional
     @Test
     public void companySaveTest() {
-        //TODO : Test 문제 해결 후 gradle build -x test 옵션 해제할 것
+      
+       Company company = companyRepository.save(Company.builder()
+                .name("test").build());
 
-        Long createCount = companyRepository.createCompany(1L, "mingCompany");
+        List<Company> companyList = companyRepository.findAllCompany();
 
-        assert (createCount.equals(1L));
+        System.out.println(company);
+        assert company.getName().equals("test");
+        assert companyList.size() == 1;
     }
 
 }

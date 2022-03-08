@@ -5,8 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@RequiredArgsConstructor
-public class CompanyRepository {
+public interface CompanyRepository extends JpaRepository<Company, Long>, CompanyRepositoryCustom {
 
     private final JPAQueryFactory factory;
 
