@@ -1,17 +1,20 @@
 package com.toy.notification;
 
-import com.toy.notification.domain.company.Company;
-import com.toy.notification.domain.company.CompanyRepository;
-import com.toy.notification.domain.noti.Noti;
-import com.toy.notification.domain.noti.NotiReceive;
-import com.toy.notification.domain.noti.NotiReceiveRepository;
-import com.toy.notification.domain.noti.NotiRepository;
-import com.toy.notification.domain.user.User;
-import com.toy.notification.domain.user.UserRepository;
+import com.toy.notification.domain.company.entity.Company;
+import com.toy.notification.domain.company.repository.CompanyRepository;
+import com.toy.notification.domain.noti.controller.NotiController;
+import com.toy.notification.domain.noti.entity.Noti;
+import com.toy.notification.domain.noti.entity.NotiReceive;
+import com.toy.notification.domain.noti.repository.NotiReceiveRepository;
+import com.toy.notification.domain.noti.repository.NotiRepository;
+import com.toy.notification.domain.noti.service.NotiService;
+import com.toy.notification.domain.user.entity.User;
+import com.toy.notification.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityManagerFactory;
@@ -37,6 +40,14 @@ class NotiSystemQuerydslApplicationTests {
 
     @Autowired
     private EntityManagerFactory factory;
+
+    //TODO : Application Context 로딩 못하는 문제
+    // MockBean으로 Controller, Service 명시. --> 명시하지 않고 해결하는 방법 검토 필요
+    @MockBean
+    private NotiController notiController;
+
+    @MockBean
+    private NotiService notiService;
 
     @Test
     public void companySaveTest() {
@@ -122,10 +133,18 @@ class NotiSystemQuerydslApplicationTests {
         System.out.println("noti receive initialize ? ");
         System.out.println(persistenceUtil.isLoaded(noti, "notiReceiveList"));
 
-//        noti.getNotiReceiveList()
-//                .forEach(chield ->
-//                        System.out.println(""
-//                                + "chield Id : " + chield.getUserId() +
-//                                " parentId : " + chield.getNoti().getNotiId()));
+        noti.getNotiReceiveList()
+                .forEach(chield ->
+                        System.out.println(""
+                                + "chield Id : " + chield.getUserId() +
+                                " parentId : " + chield.getNoti().getNotiId()));
+    }
+
+    @Test
+    public void projectionTest() {
+
+        List<Long> result = userRepository.findIdsByUserName(1L, List.of("notExistUser"));
+
+        assert result.isEmpty();
     }
 }

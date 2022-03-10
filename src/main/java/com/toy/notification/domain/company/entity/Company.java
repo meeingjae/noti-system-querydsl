@@ -1,9 +1,9 @@
-package com.toy.notification.domain.user;
+package com.toy.notification.domain.company.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,24 +12,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "COMPANY")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
-public class User {
+@Getter
+public class Company {
 
     @Id
     @GeneratedValue
-    @Column(name = "user_id", nullable = false)
-    private long userId;
-
     @Column(name = "company_id", nullable = false)
     private long companyId;
 
-    @Column(name = "username", nullable = false)
-    private String userName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column(name = "do_not_disturb_flag", nullable = true)
-    private Boolean doNotDisturbFlag;
+    @Override
+    public String toString() {
+
+        return "companyId : " + this.companyId + ", name : " + this.name;
+    }
 }

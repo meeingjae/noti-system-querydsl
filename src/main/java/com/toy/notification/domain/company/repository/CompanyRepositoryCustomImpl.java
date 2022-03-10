@@ -1,6 +1,8 @@
-package com.toy.notification.domain.company;
+package com.toy.notification.domain.company.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.toy.notification.domain.company.entity.Company;
+import com.toy.notification.domain.company.entity.QCompany;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

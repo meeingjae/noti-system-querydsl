@@ -1,5 +1,6 @@
-package com.toy.notification.domain.user;
+package com.toy.notification.domain.user.repository;
 
+import com.toy.notification.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

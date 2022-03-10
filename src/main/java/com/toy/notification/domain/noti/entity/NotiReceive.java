@@ -1,4 +1,4 @@
-package com.toy.notification.domain.noti;
+package com.toy.notification.domain.noti.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

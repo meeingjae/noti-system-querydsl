@@ -24,6 +24,9 @@ dependencies {
     // Querydsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0'
 
+    implementation 'org.springframework.data:spring-data-commons:2.6.1'
+    implementation 'org.springframework.data:spring-data-rest-core:3.6.2'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
 
