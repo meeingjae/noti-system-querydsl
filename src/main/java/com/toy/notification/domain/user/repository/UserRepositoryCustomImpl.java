@@ -2,6 +2,7 @@ package com.toy.notification.domain.user.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.toy.notification.domain.user.entity.QUser;
+import com.toy.notification.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public List<Long> findIdsByUserName(long companyId, List<String> userName) {
+    public List<Long> findSendAvailableUserIds(long companyId, List<String> userName) {
 
         return factory.select(
                 //Projections.bean 테스트
@@ -42,7 +43,8 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                 QUser.user.userId) //Long 타입의 userId 목록만 불러온다
                 .from(QUser.user)
                 .where(QUser.user.companyId.eq(companyId),
-                        QUser.user.userName.in(userName))
+                        QUser.user.userName.in(userName),
+                        QUser.user.doNotDisturb.eq(User.DoNotDisturb.OFF.isFlag()))
                 .fetch();
     }
 }

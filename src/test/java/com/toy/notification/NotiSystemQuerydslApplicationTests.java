@@ -143,7 +143,7 @@ class NotiSystemQuerydslApplicationTests {
     @Test
     public void projectionTest() {
 
-        List<Long> result = userRepository.findIdsByUserName(1L, List.of("notExistUser"));
+        List<Long> result = userRepository.findSendAvailableUserIds(1L, List.of("notExistUser"));
 
         assert result.isEmpty();
     }

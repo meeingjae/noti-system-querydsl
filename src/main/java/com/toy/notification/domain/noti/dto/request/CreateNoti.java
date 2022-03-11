@@ -1,15 +1,19 @@
 package com.toy.notification.domain.noti.dto.request;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@Getter
 @RequiredArgsConstructor
 public class CreateNoti {
 
+    @NotNull
     private final String message;
 
-    private final List<Long> receiveUserList;
-
-    private final Boolean sendAllFlag;
+    @NotEmpty
+    private final List<String> receiveUserList;
 }

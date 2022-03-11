@@ -1,13 +1,17 @@
 package com.toy.notification.domain.noti.dto.response;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+@Builder
 @Getter
 @RequiredArgsConstructor
 public class CreateNotiResponse {
 
+
+    private final long createCount;
     private final status status;
 
 
