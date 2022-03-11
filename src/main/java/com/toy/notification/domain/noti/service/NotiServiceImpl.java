@@ -2,10 +2,18 @@ package com.toy.notification.domain.noti.service;
 
 import com.toy.notification.domain.noti.dto.request.CreateNoti;
 import com.toy.notification.domain.noti.dto.response.CreateNotiResponse;
+import com.toy.notification.domain.noti.entity.Noti;
+import com.toy.notification.domain.noti.entity.NotiReceive;
 import com.toy.notification.domain.noti.repository.NotiReceiveRepository;
 import com.toy.notification.domain.noti.repository.NotiRepository;
 import com.toy.notification.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.toy.notification.domain.noti.dto.response.CreateNotiResponse.status.NOT_FOUND_USER;
+import static com.toy.notification.domain.noti.dto.response.CreateNotiResponse.status.OK;
 
 /**
  * Notification Service
@@ -20,9 +28,31 @@ public class NotiServiceImpl implements NotiService {
     @Override
     public CreateNotiResponse create(long companyId, long userId, CreateNoti request) {
 
+        // 전송 가능한 User들의 Id 목록 조회
+        List<Long> userIds = userRepository.findSendAvailableUserIds(companyId, request.getReceiveUserList());
 
+        // 전송 가능한 User가 없을 경우 응답 - 실패
+        if (userIds.isEmpty()) {
+            return CreateNotiResponse.builder()
+                    .createCount(0)
+                    .status(NOT_FOUND_USER)
+                    .build();
+        }
 
-        return null;
+        // Notification 전송
+        Noti noti = notiRepository.save(Noti.builder()
+                .message(request.getMessage())
+                .userId(userId)
+                .notiReceiveList(userIds.stream()
+                        .map(targetUserId -> NotiReceive.builder().notiReceiveId(targetUserId).build())
+                        .collect(Collectors.toList()))
+                .build());
+
+        // 응답 - 성공
+        return CreateNotiResponse.builder()
+                .createCount(noti.getNotiReceiveList().size())
+                .status(OK)
+                .build();
     }
 
 }

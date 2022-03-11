@@ -6,5 +6,5 @@ public interface UserRepositoryCustom {
 
     boolean existByUserId(long id);
 
-    List<Long> findIdsByUserName(long companyId, List<String> userName);
+    List<Long> findSendAvailableUserIds(long companyId, List<String> userName);
 }

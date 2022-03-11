@@ -5,6 +5,8 @@ import com.toy.notification.domain.noti.dto.response.CreateNotiResponse;
 import com.toy.notification.domain.noti.service.NotiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -24,6 +26,8 @@ public class NotiController {
     private final NotiService notiService;
 
     /**
+     * Notification을 생성한다
+     *
      * @param companyId 회사 id 값
      * @param userId    유저 id 값
      * @param request   Noti 생성 요청 데이터
@@ -31,9 +35,9 @@ public class NotiController {
      */
     @PostMapping
     public ResponseEntity<CreateNotiResponse> create(
-            @RequestHeader(value = "companyId", required = true) long companyId,
+            @RequestHeader(value = "companyId", required = true, defaultValue = "1") long companyId,
             @RequestHeader(value = "userId", required = true) long userId,
-            @RequestBody CreateNoti request) {
+            @RequestBody @Validated CreateNoti request) {
 
         CreateNotiResponse response = notiService.create(companyId, userId, request);
 
