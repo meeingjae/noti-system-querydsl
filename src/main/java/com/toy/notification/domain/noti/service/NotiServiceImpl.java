@@ -7,13 +7,14 @@ import com.toy.notification.domain.noti.entity.NotiReceive;
 import com.toy.notification.domain.noti.repository.NotiReceiveRepository;
 import com.toy.notification.domain.noti.repository.NotiRepository;
 import com.toy.notification.domain.user.repository.UserRepository;
+import com.toy.notification.util.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.toy.notification.domain.noti.dto.response.CreateNotiResponse.status.NOT_FOUND_USER;
-import static com.toy.notification.domain.noti.dto.response.CreateNotiResponse.status.OK;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Notification Service
@@ -35,7 +36,7 @@ public class NotiServiceImpl implements NotiService {
         if (userIds.isEmpty()) {
             return CreateNotiResponse.builder()
                     .createCount(0)
-                    .status(NOT_FOUND_USER)
+                    .status(new ResponseStatus(NOT_FOUND,"request user not found"))
                     .build();
         }
 
@@ -51,7 +52,7 @@ public class NotiServiceImpl implements NotiService {
         // 응답 - 성공
         return CreateNotiResponse.builder()
                 .createCount(noti.getNotiReceiveList().size())
-                .status(OK)
+                .status(new ResponseStatus(OK, "create success"))
                 .build();
     }
 

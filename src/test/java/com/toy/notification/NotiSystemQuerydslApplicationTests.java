@@ -3,6 +3,7 @@ package com.toy.notification;
 import com.toy.notification.domain.company.entity.Company;
 import com.toy.notification.domain.company.repository.CompanyRepository;
 import com.toy.notification.domain.noti.controller.NotiController;
+import com.toy.notification.domain.noti.dto.response.ListNotiResponse;
 import com.toy.notification.domain.noti.entity.Noti;
 import com.toy.notification.domain.noti.entity.NotiReceive;
 import com.toy.notification.domain.noti.repository.NotiReceiveRepository;
@@ -10,6 +11,7 @@ import com.toy.notification.domain.noti.repository.NotiRepository;
 import com.toy.notification.domain.noti.service.NotiService;
 import com.toy.notification.domain.user.entity.User;
 import com.toy.notification.domain.user.repository.UserRepository;
+import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,5 +148,60 @@ class NotiSystemQuerydslApplicationTests {
         List<Long> result = userRepository.findSendAvailableUserIds(1L, List.of("notExistUser"));
 
         assert result.isEmpty();
+    }
+
+    @Test
+    public void nullValidTest() throws PropertyValueException {
+
+        try {
+            userRepository.save(User.builder()
+                    .companyId(null)
+                    .userName("ming")
+                    .build());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    public void notiListTest() {
+
+        Noti firstNoti = notiRepository.save(Noti.builder()
+                .userId(1L)
+                .message("first message")
+                .build());
+
+        Noti secondNoti = notiRepository.save(Noti.builder()
+                .userId(1L)
+                .message("second message")
+                .build());
+
+        notiReceiveRepository.saveAll(List.of(
+                NotiReceive.builder()
+                        .noti(firstNoti)
+                        .userId(2L)
+                        .readFlag(true)
+                        .build(),
+                NotiReceive.builder()
+                        .noti(firstNoti)
+                        .userId(3L)
+                        .readFlag(true)
+                        .build(),
+                NotiReceive.builder()
+                        .noti(firstNoti)
+                        .userId(4L)
+                        .readFlag(true)
+                        .build(),
+                NotiReceive.builder()
+                        .noti(secondNoti)
+                        .userId(2L)
+                        .readFlag(true)
+                        .build()));
+        List<ListNotiResponse.NotiResponseObject> object = notiReceiveRepository.list(2L);
+
+        System.out.println("size : " + object.size());
+        object.forEach(System.out::println);
+
+        assert object.size() == 2;
     }
 }
