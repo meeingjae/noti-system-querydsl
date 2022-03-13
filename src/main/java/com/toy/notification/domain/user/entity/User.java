@@ -33,7 +33,7 @@ public class User {
                                                     // @NotNull Annotation에 ddl 적용 옵션으로 사용하는 것이 General 하다
     @NotNull                                        // 추후에 nullalble = false 옵션을 걷어내는 방향으로 진행
     @Column(name = "company_id", nullable = false)
-    private long companyId;
+    private Long companyId;
 
     @NotNull
     @Column(name = "username", nullable = false)
