@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @Getter
 @RequiredArgsConstructor
-public class CreateNotiResponse {
+public class DeleteNotiResponse {
 
-    private final long           createCount;
     private final ResponseStatus status;
 }

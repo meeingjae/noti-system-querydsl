@@ -1,7 +1,7 @@
 package com.toy.notification.domain.noti.service;
 
 import com.toy.notification.domain.noti.dto.request.CreateNoti;
-import com.toy.notification.domain.noti.dto.response.CreateNotiResponse;
+import com.toy.notification.domain.noti.dto.response.NotiResponse;
 import com.toy.notification.domain.noti.entity.Noti;
 import com.toy.notification.domain.noti.entity.NotiReceive;
 import com.toy.notification.domain.noti.repository.NotiReceiveRepository;
@@ -27,15 +27,15 @@ public class NotiServiceImpl implements NotiService {
     private final UserRepository        userRepository;
 
     @Override
-    public CreateNotiResponse create(long companyId, long userId, CreateNoti request) {
+    public NotiResponse create(long companyId, long userId, CreateNoti request) {
 
         // 전송 가능한 User들의 Id 목록 조회
         List<Long> userIds = userRepository.findSendAvailableUserIds(companyId, request.getReceiveUserList());
 
         // 전송 가능한 User가 없을 경우 응답 - 실패
         if (userIds.isEmpty()) {
-            return CreateNotiResponse.builder()
-                    .createCount(0)
+            return NotiResponse.builder()
+                    .count(0)
                     .status(new ResponseStatus(NOT_FOUND,"request user not found"))
                     .build();
         }
@@ -50,8 +50,8 @@ public class NotiServiceImpl implements NotiService {
                 .build());
 
         // 응답 - 성공
-        return CreateNotiResponse.builder()
-                .createCount(noti.getNotiReceiveList().size())
+        return NotiResponse.builder()
+                .count(noti.getNotiReceiveList().size())
                 .status(new ResponseStatus(OK, "create success"))
                 .build();
     }

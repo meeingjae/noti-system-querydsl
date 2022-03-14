@@ -1,5 +1,7 @@
 package com.toy.notification.domain.noti.service;
 
+import com.toy.notification.domain.noti.dto.request.UpdateNoti;
+import com.toy.notification.domain.noti.dto.response.DeleteNotiResponse;
 import com.toy.notification.domain.noti.dto.response.ListNotiResponse;
 import com.toy.notification.domain.noti.repository.NotiReceiveRepository;
 import com.toy.notification.util.ResponseStatus;
@@ -32,4 +34,14 @@ public class NotiReceiveServiceImpl implements NotiReceiveService {
                 .status(new ResponseStatus(OK, "OK"))
                 .build();
     }
+
+    @Override
+    public DeleteNotiResponse delete(UpdateNoti request) {
+
+        //검사 로직은 생략
+        notiReceiveRepository.deleteAllById(request.getNotiReceiveUid());
+
+        return DeleteNotiResponse.builder().status(new ResponseStatus(OK, "deleted")).build();
+    }
+
 }

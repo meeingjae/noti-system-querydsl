@@ -1,9 +1,8 @@
 package com.toy.notification.domain.noti.controller;
 
 import com.toy.notification.domain.noti.dto.request.CreateNoti;
-import com.toy.notification.domain.noti.dto.response.CreateNotiResponse;
+import com.toy.notification.domain.noti.dto.response.NotiResponse;
 import com.toy.notification.domain.noti.service.NotiService;
-import com.toy.notification.util.ResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,14 +34,14 @@ public class NotiController {
      * @return Noti 생성 결과
      */
     @PostMapping
-    public ResponseEntity<CreateNotiResponse> create(
+    public ResponseEntity<NotiResponse> create(
             @RequestHeader(value = "companyId", required = true, defaultValue = "1") long companyId,
             @RequestHeader(value = "userId", required = true) long userId,
             @RequestBody @Validated CreateNoti request) {
 
-        CreateNotiResponse response = notiService.create(companyId, userId, request);
+        NotiResponse response = notiService.create(companyId, userId, request);
 
-        return new ResponseEntity<CreateNotiResponse>(
+        return new ResponseEntity<NotiResponse>(
                 response,
                 Arrays.stream(HttpStatus.values())
                         .filter(httpStatus -> httpStatus.equals(response.getStatus().getHttpStatus()))
