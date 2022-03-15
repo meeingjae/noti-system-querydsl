@@ -23,7 +23,6 @@ import static org.springframework.http.HttpStatus.OK;
 public class NotiServiceImpl implements NotiService {
 
     private final NotiRepository        notiRepository;
-    private final NotiReceiveRepository notiReceiveRepository;
     private final UserRepository        userRepository;
 
     @Override

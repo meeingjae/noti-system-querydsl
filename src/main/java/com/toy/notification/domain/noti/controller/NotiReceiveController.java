@@ -54,6 +54,12 @@ public class NotiReceiveController {
             @RequestHeader(value = "userId", required = true) long userId,
             @RequestBody @Validated UpdateNoti request) {
 
-        return null;
+        NotiResponse result = service.update(request);
+
+        return new ResponseEntity<NotiResponse>(
+                Arrays.stream(HttpStatus.values())
+                        .filter(httpStatus -> httpStatus.equals(result.getStatus().getHttpStatus()))
+                        .findFirst().get()
+        );
     }
 }

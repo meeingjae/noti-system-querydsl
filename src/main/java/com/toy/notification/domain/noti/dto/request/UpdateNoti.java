@@ -11,5 +11,5 @@ import java.util.List;
 public class UpdateNoti {
 
     @NotEmpty
-    private final List<Long> notiReceiveUid;
+    private final List<Long> notiReceiveIds;
 }
