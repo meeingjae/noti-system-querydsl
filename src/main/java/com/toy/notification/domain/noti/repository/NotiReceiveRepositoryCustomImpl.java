@@ -2,6 +2,7 @@ package com.toy.notification.domain.noti.repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.toy.notification.domain.noti.entity.NotiReceive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +31,15 @@ public class NotiReceiveRepositoryCustomImpl implements NotiReceiveRepositoryCus
                 .from(notiReceive)
                 .join(notiReceive.noti, noti)
                 .where(notiReceive.userId.eq(userUid))
+                .fetch();
+    }
+
+    @Override
+    public List<NotiReceive> findAllByNotiReceiveId(List<Long> notiReceiveId) {
+
+        return factory.select(notiReceive)
+                .from(notiReceive)
+                .where(notiReceive.notiReceiveId.in(notiReceiveId))
                 .fetch();
     }
 }

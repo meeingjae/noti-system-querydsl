@@ -3,6 +3,8 @@ package com.toy.notification.domain.noti.service;
 import com.toy.notification.domain.noti.dto.request.UpdateNoti;
 import com.toy.notification.domain.noti.dto.response.DeleteNotiResponse;
 import com.toy.notification.domain.noti.dto.response.ListNotiResponse;
+import com.toy.notification.domain.noti.dto.response.NotiResponse;
+import com.toy.notification.domain.noti.entity.NotiReceive;
 import com.toy.notification.domain.noti.repository.NotiReceiveRepository;
 import com.toy.notification.util.ResponseStatus;
 import lombok.RequiredArgsConstructor;
@@ -39,9 +41,24 @@ public class NotiReceiveServiceImpl implements NotiReceiveService {
     public DeleteNotiResponse delete(UpdateNoti request) {
 
         //검사 로직은 생략
-        notiReceiveRepository.deleteAllById(request.getNotiReceiveUid());
+        notiReceiveRepository.deleteAllById(request.getNotiReceiveIds());
 
         return DeleteNotiResponse.builder().status(new ResponseStatus(OK, "deleted")).build();
+    }
+
+    @Override
+    public NotiResponse update(UpdateNoti request) {
+
+        List<NotiReceive> notiReceiveList = notiReceiveRepository.findAllByNotiReceiveId(request.getNotiReceiveIds());
+
+        notiReceiveList.forEach(notiReceive -> notiReceive.setReadFlag(true));
+
+        notiReceiveList = notiReceiveRepository.saveAll(notiReceiveList);
+
+        return NotiResponse.builder()
+                .count(notiReceiveList.size())
+                .status(new ResponseStatus(OK, "update success"))
+                .build();
     }
 
 }
