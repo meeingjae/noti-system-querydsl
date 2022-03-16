@@ -47,4 +47,13 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
                         QUser.user.doNotDisturb.eq(User.DoNotDisturb.OFF.isFlag()))
                 .fetch();
     }
+
+    @Override
+    public User findByCompanyAndUserId(long companyId, long userId) {
+
+        return factory.select(QUser.user)
+                .from(QUser.user)
+                .where(QUser.user.companyId.eq(companyId), QUser.user.userId.eq(userId))
+                .fetchFirst();
+    }
 }
