@@ -7,5 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDeleteRequest {
 
+    private final long companyId;
+
     private final long userId;
 }

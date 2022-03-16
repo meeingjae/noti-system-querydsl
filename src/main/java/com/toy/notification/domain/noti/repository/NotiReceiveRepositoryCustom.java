@@ -11,4 +11,6 @@ public interface NotiReceiveRepositoryCustom {
     List<NotiReceive> findAllByNotiReceiveId(List<Long> notiReceiveId);
 
     List<NotiResponseObject> list(long userUid);
+
+    List<NotiReceive> findAllByUserId(long userId);
 }

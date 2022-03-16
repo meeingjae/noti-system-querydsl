@@ -42,4 +42,14 @@ public class NotiReceiveRepositoryCustomImpl implements NotiReceiveRepositoryCus
                 .where(notiReceive.notiReceiveId.in(notiReceiveId))
                 .fetch();
     }
+
+
+    @Override
+    public List<NotiReceive> findAllByUserId(long userId) {
+
+        return factory.select(notiReceive)
+                .from(notiReceive)
+                .where(notiReceive.userId.eq(userId))
+                .fetch();
+    }
 }
